@@ -1,0 +1,919 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hisham Sanjag — AI Software Engineer</title>
+<meta name="description" content="Hisham Sanjag — AI Software Engineer specializing in agentic AI, generative AI, multi-agent systems and full-stack development.">
+<meta name="theme-color" content="#090b10">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23090b10'/%3E%3Ctext x='32' y='41' font-family='monospace' font-size='24' font-weight='700' fill='%2345e0c4' text-anchor='middle'%3EH%3C/text%3E%3Ccircle cx='49' cy='17' r='3' fill='%23ffab4a'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=JetBrains+Mono:wght@400;500;600;700&family=Public+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#090b10;
+    --bg-alt:#0d1017;
+    --panel:rgba(255,255,255,0.035);
+    --panel-hover:rgba(255,255,255,0.06);
+    --border:rgba(255,255,255,0.09);
+    --border-strong:rgba(255,255,255,0.18);
+    --text:#e8ecf1;
+    --dim:#8a93a3;
+    --dimmer:#565f6d;
+    --accent:#45e0c4;
+    --accent-soft:rgba(69,224,196,0.14);
+    --amber:#ffab4a;
+    --amber-soft:rgba(255,171,74,0.14);
+    --serif:'Fraunces',Georgia,serif;
+    --mono:'JetBrains Mono',ui-monospace,monospace;
+    --sans:'Public Sans',system-ui,sans-serif;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--sans);
+    line-height:1.6;
+    overflow-x:hidden;
+    position:relative;
+  }
+
+  /* grain overlay */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:999;
+    pointer-events:none;
+    opacity:0.035;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    mix-blend-mode:overlay;
+  }
+
+  /* subtle blueprint grid */
+  .grid-bg{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+    background-size:64px 64px;
+    -webkit-mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 90%);
+    mask-image:radial-gradient(ellipse 80% 60% at 50% 0%, black 40%, transparent 90%);
+  }
+
+  section, header, footer{position:relative; z-index:1;}
+
+  ::selection{background:var(--accent); color:#04110d;}
+
+  ::-webkit-scrollbar{width:10px;}
+  ::-webkit-scrollbar-track{background:var(--bg);}
+  ::-webkit-scrollbar-thumb{background:#232a35; border-radius:10px;}
+  ::-webkit-scrollbar-thumb:hover{background:var(--accent);}
+
+  a{color:inherit; text-decoration:none;}
+
+  .wrap{
+    max-width:1120px;
+    margin:0 auto;
+    padding:0 32px;
+  }
+
+  .eyebrow{
+    font-family:var(--mono);
+    font-size:0.78rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--accent);
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:7px; height:7px;
+    background:var(--accent);
+    border-radius:50%;
+    box-shadow:0 0 10px var(--accent);
+    flex-shrink:0;
+  }
+
+  h1,h2,h3{font-family:var(--serif); font-weight:600; letter-spacing:-0.01em;}
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed;
+    top:0; left:0; right:0;
+    z-index:100;
+    border-bottom:1px solid transparent;
+    transition:background .35s ease, border-color .35s ease;
+  }
+  header.scrolled{
+    background:rgba(9,11,16,0.78);
+    backdrop-filter:blur(14px) saturate(140%);
+    -webkit-backdrop-filter:blur(14px) saturate(140%);
+    border-bottom-color:var(--border);
+  }
+  .nav-inner{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:20px;
+    max-width:1160px;
+    margin:0 auto;
+    padding:22px 32px;
+    transition:padding .35s ease;
+  }
+  header.scrolled .nav-inner{padding:15px 32px;}
+  .logo{
+    font-family:var(--mono);
+    font-weight:600;
+    font-size:0.8rem;
+    letter-spacing:0.08em;
+    color:var(--text);
+    flex-shrink:0;
+  }
+  .logo::before{content:"[ "; color:var(--dimmer);}
+  .logo::after{content:" ]"; color:var(--dimmer);}
+  .nav-main{
+    display:flex;
+    align-items:center;
+    font-family:var(--mono);
+    font-size:0.74rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+  }
+  .nav-main a{
+    color:var(--dim);
+    padding:6px 16px;
+    transition:color .2s ease;
+  }
+  .nav-main a:not(:first-child){border-left:1px solid var(--border);}
+  .nav-main a:hover{color:var(--accent);}
+  .nav-status{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    font-family:var(--mono);
+    font-size:0.72rem;
+    letter-spacing:0.03em;
+    color:var(--dim);
+    flex-shrink:0;
+  }
+  .nav-status .dot{
+    width:6px; height:6px;
+    border-radius:50%;
+    background:var(--accent);
+    box-shadow:0 0 8px var(--accent);
+    animation:dot-pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes dot-pulse{0%,100%{opacity:1;}50%{opacity:0.35;}}
+  .menu-btn{display:none; background:none; border:none; color:var(--text); font-size:1.2rem; cursor:pointer; flex-shrink:0;}
+
+  /* ---------- HERO ---------- */
+  #hero{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    padding-top:90px;
+    position:relative;
+    overflow:hidden;
+  }
+  #network-canvas{
+    position:absolute;
+    inset:0;
+    z-index:0;
+    opacity:0.75;
+  }
+  #hero::after{
+    content:"";
+    position:absolute; inset:0;
+    background:radial-gradient(ellipse 70% 55% at 30% 40%, rgba(9,11,16,0.2) 0%, var(--bg) 92%);
+    z-index:1;
+    pointer-events:none;
+  }
+  .hero-inner{position:relative; z-index:2; width:100%;}
+
+  .hero-tagline-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin:22px 0 26px;
+  }
+  .chip{
+    font-family:var(--mono);
+    font-size:0.74rem;
+    letter-spacing:0.03em;
+    padding:6px 12px;
+    border:1px solid var(--border);
+    border-radius:999px;
+    color:var(--dim);
+    background:var(--panel);
+  }
+
+  h1.name{
+    font-size:clamp(3rem, 8vw, 6rem);
+    line-height:0.98;
+    margin-top:14px;
+    font-style:italic;
+    font-variation-settings:"opsz" 144;
+  }
+  h1.name .last{display:block; font-style:normal; color:var(--text);}
+
+  .hero-desc{
+    max-width:560px;
+    color:var(--dim);
+    font-size:1.02rem;
+    margin:22px 0 34px;
+  }
+  .hero-desc strong{color:var(--text); font-weight:600;}
+
+  .btn-row{display:flex; flex-wrap:wrap; gap:14px; align-items:center;}
+  .btn{
+    font-family:var(--mono);
+    font-size:0.85rem;
+    padding:14px 26px;
+    border-radius:8px;
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    transition:all .25s ease;
+    border:1px solid transparent;
+  }
+  .btn-primary{
+    background:var(--accent);
+    color:#04110d;
+    font-weight:700;
+  }
+  .btn-primary:hover{box-shadow:0 0 28px var(--accent-soft); transform:translateY(-2px);}
+  .btn-ghost{
+    border-color:var(--border-strong);
+    color:var(--text);
+  }
+  .btn-ghost:hover{border-color:var(--accent); color:var(--accent); transform:translateY(-2px);}
+
+  .terminal{
+    margin-top:56px;
+    max-width:520px;
+    background:rgba(13,16,23,0.75);
+    border:1px solid var(--border);
+    border-radius:10px;
+    overflow:hidden;
+    backdrop-filter:blur(6px);
+  }
+  .terminal-bar{
+    display:flex; gap:7px;
+    padding:11px 14px;
+    border-bottom:1px solid var(--border);
+    background:rgba(255,255,255,0.02);
+  }
+  .terminal-bar span{width:10px; height:10px; border-radius:50%; background:#333;}
+  .terminal-bar span:nth-child(1){background:#ff5f57;}
+  .terminal-bar span:nth-child(2){background:#febc2e;}
+  .terminal-bar span:nth-child(3){background:#28c840;}
+  .terminal-body{
+    padding:16px 18px 20px;
+    font-family:var(--mono);
+    font-size:0.8rem;
+    color:#9fe8d8;
+    min-height:132px;
+    white-space:pre-wrap;
+  }
+  .terminal-body .cursor{
+    display:inline-block;
+    width:7px; height:14px;
+    background:var(--accent);
+    margin-left:2px;
+    animation:blink 1s steps(1) infinite;
+    vertical-align:middle;
+  }
+  @keyframes blink{50%{opacity:0;}}
+
+  /* ---------- SECTION SHARED ---------- */
+  section{padding:130px 0;}
+  .section-head{margin-bottom:56px;}
+  .section-head h2{font-size:clamp(2rem,4vw,2.8rem); margin-top:12px;}
+  .section-head .num{
+    font-family:var(--mono);
+    color:var(--dimmer);
+    font-size:0.85rem;
+  }
+
+  [data-reveal]{
+    opacity:0;
+    transform:translateY(24px);
+    transition:opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1);
+  }
+  [data-reveal].in-view{opacity:1; transform:translateY(0);}
+
+  /* ---------- ABOUT ---------- */
+  #about{background:var(--bg-alt); border-top:1px solid var(--border); border-bottom:1px solid var(--border);}
+  .about-grid{display:grid; grid-template-columns:1.3fr 1fr; gap:64px; align-items:start;}
+  .about-text p{color:var(--dim); font-size:1.05rem; margin-bottom:18px;}
+  .about-text strong{color:var(--text);}
+  .stats{display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); border:1px solid var(--border); border-radius:12px; overflow:hidden;}
+  .stat{background:var(--bg-alt); padding:26px 22px;}
+  .stat .n{font-family:var(--serif); font-size:2.3rem; color:var(--accent); font-style:italic;}
+  .stat .l{font-family:var(--mono); font-size:0.72rem; color:var(--dim); letter-spacing:0.03em; margin-top:6px;}
+
+  /* ---------- EXPERIENCE ---------- */
+  .timeline{position:relative; padding-left:40px;}
+  .timeline::before{
+    content:"";
+    position:absolute; left:6px; top:8px; bottom:8px;
+    width:1px;
+    background:linear-gradient(var(--accent), var(--border) 60%);
+  }
+  .tl-item{position:relative; padding-bottom:56px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-dot{
+    position:absolute; left:-40px; top:4px;
+    width:13px; height:13px;
+    border-radius:50%;
+    background:var(--bg);
+    border:2px solid var(--accent);
+    box-shadow:0 0 0 4px var(--bg), 0 0 14px var(--accent-soft);
+  }
+  .tl-item.past .tl-dot{border-color:var(--dimmer); box-shadow:0 0 0 4px var(--bg);}
+  .tl-date{font-family:var(--mono); font-size:0.76rem; color:var(--accent); letter-spacing:0.04em;}
+  .tl-item.past .tl-date{color:var(--dim);}
+  .tl-role{font-family:var(--serif); font-size:1.5rem; margin:8px 0 2px;}
+  .tl-org{font-family:var(--mono); font-size:0.85rem; color:var(--dim); margin-bottom:16px;}
+  .tl-org .status{
+    display:inline-flex; align-items:center; gap:6px;
+    margin-left:10px; padding:3px 10px;
+    border:1px solid var(--accent-soft);
+    background:var(--accent-soft);
+    color:var(--accent);
+    border-radius:999px;
+    font-size:0.68rem;
+  }
+  .tl-org .status::before{content:""; width:5px; height:5px; border-radius:50%; background:var(--accent); box-shadow:0 0 6px var(--accent);}
+  .tl-list{list-style:none;}
+  .tl-list li{
+    position:relative;
+    padding-left:22px;
+    color:var(--dim);
+    margin-bottom:10px;
+    font-size:0.96rem;
+  }
+  .tl-list li::before{content:"→"; position:absolute; left:0; color:var(--dimmer); font-family:var(--mono);}
+
+  /* ---------- PROJECTS ---------- */
+  .proj-grid{display:grid; grid-template-columns:1fr 1fr; gap:24px;}
+  .proj-card{
+    border:1px solid var(--border);
+    background:var(--panel);
+    border-radius:14px;
+    padding:32px;
+    position:relative;
+    overflow:hidden;
+    transition:border-color .3s ease, transform .3s ease, background .3s ease;
+  }
+  .proj-card:hover{border-color:var(--border-strong); transform:translateY(-4px); background:var(--panel-hover);}
+  .proj-card::before{
+    content:"";
+    position:absolute; top:0; left:0; right:0; height:2px;
+    background:linear-gradient(90deg, var(--accent), transparent 70%);
+    opacity:0; transition:opacity .3s ease;
+  }
+  .proj-card:hover::before{opacity:1;}
+  .proj-index{font-family:var(--mono); color:var(--dimmer); font-size:0.8rem;}
+  .proj-title{font-family:var(--serif); font-size:1.5rem; margin:14px 0 12px;}
+  .proj-tags{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:16px;}
+  .proj-tags span{
+    font-family:var(--mono); font-size:0.68rem;
+    color:var(--amber); background:var(--amber-soft);
+    padding:4px 10px; border-radius:999px; letter-spacing:0.03em;
+  }
+  .proj-desc{color:var(--dim); font-size:0.94rem;}
+
+  .also-built{margin-top:36px;}
+  .also-built h4{
+    font-family:var(--mono); font-size:0.78rem; color:var(--dim);
+    letter-spacing:0.08em; text-transform:uppercase; margin-bottom:18px;
+  }
+  .also-grid{display:flex; flex-wrap:wrap; gap:12px;}
+  .also-grid span{
+    font-family:var(--mono); font-size:0.82rem;
+    border:1px solid var(--border);
+    padding:9px 16px; border-radius:8px;
+    color:var(--text);
+    transition:border-color .2s ease, color .2s ease;
+  }
+  .also-grid span:hover{border-color:var(--accent); color:var(--accent);}
+
+  /* ---------- STACK ---------- */
+  .stack-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:20px;}
+  .stack-card{
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:26px;
+    background:var(--panel);
+  }
+  .stack-card h3{
+    font-family:var(--mono); font-size:0.82rem; text-transform:uppercase;
+    letter-spacing:0.06em; color:var(--accent); margin-bottom:16px; font-weight:600;
+  }
+  .stack-chips{display:flex; flex-wrap:wrap; gap:8px;}
+  .stack-chips span{
+    font-size:0.82rem; color:var(--dim);
+    padding:6px 0;
+  }
+  .stack-chips span:not(:last-child)::after{content:" · "; color:var(--dimmer);}
+
+  /* ---------- CREDENTIALS ---------- */
+  .cred-grid{display:grid; grid-template-columns:1fr 1.4fr; gap:48px;}
+  .edu-card{
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:30px;
+    background:var(--panel);
+  }
+  .edu-card .deg{font-family:var(--serif); font-size:1.3rem; margin-bottom:8px;}
+  .edu-card .school{font-family:var(--mono); font-size:0.82rem; color:var(--accent); margin-bottom:4px;}
+  .edu-card .meta{font-family:var(--mono); font-size:0.75rem; color:var(--dim); margin-bottom:16px;}
+  .edu-card p{color:var(--dim); font-size:0.9rem;}
+  .cert-grid{display:grid; grid-template-columns:1fr 1fr; gap:12px;}
+  .cert-badge{
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:16px 18px;
+    display:flex; align-items:flex-start; gap:12px;
+    font-size:0.86rem;
+    transition:border-color .2s ease;
+  }
+  .cert-badge:hover{border-color:var(--accent-soft);}
+  .cert-badge .mark{color:var(--amber); font-family:var(--mono); flex-shrink:0;}
+  .cert-badge .body b{display:block; color:var(--text); font-weight:600; margin-bottom:2px;}
+  .cert-badge .body span{color:var(--dim); font-size:0.78rem; font-family:var(--mono);}
+
+  /* ---------- CONTACT ---------- */
+  #contact{
+    text-align:center;
+    background:var(--bg-alt);
+    border-top:1px solid var(--border);
+  }
+  #contact h2{font-size:clamp(2.2rem,6vw,4rem); font-style:italic; max-width:800px; margin:0 auto 28px;}
+  #contact .hint{font-family:var(--mono); color:var(--dim); margin-bottom:40px;}
+  .contact-links{display:flex; justify-content:center; flex-wrap:wrap; gap:16px;}
+
+  footer{
+    padding:32px 0;
+    border-top:1px solid var(--border);
+  }
+  .footer-inner{
+    display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:12px;
+    font-family:var(--mono); font-size:0.76rem; color:var(--dimmer);
+  }
+  .footer-inner a:hover{color:var(--accent);}
+
+  @media (max-width:900px){
+    .about-grid, .cred-grid{grid-template-columns:1fr;}
+    .proj-grid{grid-template-columns:1fr;}
+    .stack-grid{grid-template-columns:1fr 1fr;}
+    .cert-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width:640px){
+    header{background:rgba(9,11,16,0.9); border-bottom-color:var(--border);}
+    .nav-status{display:none;}
+    .nav-links{
+      position:fixed; top:60px; left:0; right:0;
+      background:rgba(9,11,16,0.98);
+      border-bottom:1px solid var(--border);
+      padding:6px 22px 18px;
+      transform:translateY(-130%);
+      transition:transform .3s ease;
+    }
+    .nav-links.open{transform:translateY(0);}
+    .nav-main{flex-direction:column; align-items:stretch;}
+    .nav-main a{padding:14px 2px; border-left:none !important; border-bottom:1px solid var(--border);}
+    .menu-btn{display:block;}
+    .stack-grid{grid-template-columns:1fr;}
+    section{padding:90px 0;}
+    .wrap{padding:0 22px;}
+    .timeline{padding-left:30px;}
+    .tl-dot{left:-30px;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+    html{scroll-behavior:auto;}
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<header>
+  <div class="nav-inner">
+    <a href="#hero" class="logo">HS</a>
+    <div class="nav-links" id="navLinks">
+      <nav class="nav-main">
+        <a href="#about">About</a>
+        <a href="#experience">Experience</a>
+        <a href="#work">Work</a>
+        <a href="#stack">Stack</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+    <div class="nav-status"><span class="dot"></span><span id="navClock">--:--:--</span></div>
+    <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">☰</button>
+  </div>
+</header>
+
+<section id="hero">
+  <canvas id="network-canvas"></canvas>
+  <div class="wrap hero-inner">
+    <span class="eyebrow">Al Zarqa, Jordan — currently building at Bayanat</span>
+    <h1 class="name">Hisham<span class="last">Sanjag.</span></h1>
+
+    <div class="hero-tagline-row">
+      <span class="chip">Agentic AI</span>
+      <span class="chip">Generative AI</span>
+      <span class="chip">Multi-Agent Systems</span>
+      <span class="chip">Full-Stack Development</span>
+    </div>
+
+    <p class="hero-desc">
+      AI Software Engineer who designs and ships <strong>production</strong> agentic systems end to end —
+      autonomous agents, RAG &amp; Graph RAG pipelines, and the full-stack platforms they run on.
+      Currently leading the AI engineering and design of an enterprise AI assistant, from architecture
+      through deployment.
+    </p>
+
+    <div class="btn-row">
+      <a href="#work" class="btn btn-primary">View Projects ↓</a>
+      <a href="Hisham%20Sanjag%20-%20Resume.pdf" target="_blank" class="btn btn-ghost">Download Résumé</a>
+    </div>
+
+    <div class="terminal">
+      <div class="terminal-bar"><span></span><span></span><span></span></div>
+      <div class="terminal-body" id="terminalBody"></div>
+    </div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="section-head num">01 / About</span>
+      <h2>Profile</h2>
+    </div>
+    <div class="about-grid">
+      <div class="about-text" data-reveal>
+        <p>
+          AI Software Engineer specializing in <strong>agentic AI</strong>, <strong>generative AI</strong>,
+          and full-stack development. Builds and ships production AI systems end to end — autonomous agents,
+          generative-AI applications, and the full-stack platforms behind them.
+        </p>
+        <p>
+          Currently leads the AI engineering and design of Bayanat's flagship enterprise AI assistant —
+          owning the multi-agent architecture, RAG &amp; Graph RAG pipelines, and delivery from design
+          through production. BSc in Artificial Intelligence &amp; Computer Science from Tafila Technical
+          University, with a focus on AI, full-stack systems, and source-code security research.
+        </p>
+      </div>
+      <div class="stats" data-reveal>
+        <div class="stat"><div class="n">1.5+</div><div class="l">YEARS LEADING PRODUCTION AI</div></div>
+        <div class="stat"><div class="n">9</div><div class="l">PROJECTS SHIPPED</div></div>
+        <div class="stat"><div class="n">7</div><div class="l">PROFESSIONAL CERTIFICATIONS</div></div>
+        <div class="stat"><div class="n">3.12</div><div class="l">GPA · BSc AI &amp; CS</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="section-head num">02 / Experience</span>
+      <h2>Where I've worked</h2>
+    </div>
+    <div class="timeline">
+      <div class="tl-item" data-reveal>
+        <div class="tl-dot"></div>
+        <div class="tl-date">JAN 2025 — PRESENT</div>
+        <div class="tl-role">Software Engineer — AI Lead</div>
+        <div class="tl-org">Bayanat, Amman, Jordan <span class="status">production</span></div>
+        <ul class="tl-list">
+          <li>Lead AI engineer and designer of Bayanat's flagship agentic-AI assistant — own the multi-agent architecture, RAG and Graph RAG pipelines, and end-to-end delivery from design through production.</li>
+          <li>Design and orchestrate autonomous agents (planning, reasoning, tool use, and memory) that let users query large enterprise knowledge bases in natural language.</li>
+          <li>Own deployment and operations — Dockerized microservices with Spring Boot and Oracle/PostgreSQL — and am accountable for the system's reliability in production.</li>
+          <li>Gained hands-on experience in full-stack development using Java, Spring Boot, React, SQL/PLSQL, and relational databases including Oracle, MySQL, and PostgreSQL.</li>
+        </ul>
+      </div>
+      <div class="tl-item past" data-reveal>
+        <div class="tl-dot"></div>
+        <div class="tl-date">JUN 2023 — JUL 2023</div>
+        <div class="tl-role">Trainee Software Engineer</div>
+        <div class="tl-org">Star Ways</div>
+        <ul class="tl-list">
+          <li>Hands-on training in client requirements analysis and proposal workflows, with exposure to an internal automation system and how business needs translate into technical solutions.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="work">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="section-head num">03 / Work</span>
+      <h2>Key projects</h2>
+    </div>
+    <div class="proj-grid">
+      <div class="proj-card" data-reveal>
+        <div class="proj-index">01</div>
+        <div class="proj-title">Bayanat AI Assistant</div>
+        <div class="proj-tags"><span>MULTI-AGENT</span><span>RAG + GRAPH RAG</span><span>LANGCHAIN/LANGGRAPH</span></div>
+        <p class="proj-desc">Enterprise agentic-AI assistant over internal knowledge bases — multi-agent retrieval, reasoning, and tool use on a RAG &amp; Graph RAG pipeline; React UI, Spring Boot/Oracle/PostgreSQL backend, Docker microservices.</p>
+      </div>
+      <div class="proj-card" data-reveal>
+        <div class="proj-index">02</div>
+        <div class="proj-title">Knowledge Graph RAG Engine</div>
+        <div class="proj-tags"><span>KNOWLEDGE GRAPH</span><span>VECTOR SEARCH</span><span>MULTI-HOP QA</span></div>
+        <p class="proj-desc">Retrieval system combining a knowledge graph with vector search to answer multi-hop questions over structured and unstructured data, returning grounded, source-cited responses.</p>
+      </div>
+      <div class="proj-card" data-reveal>
+        <div class="proj-index">03</div>
+        <div class="proj-title">Agentic AI Automation System</div>
+        <div class="proj-tags"><span>AUTONOMOUS AGENTS</span><span>TOOL CALLING</span><span>ORCHESTRATION</span></div>
+        <p class="proj-desc">Multi-agent platform where autonomous agents plan and execute multi-step tasks via tool calling, shared memory, and orchestration to automate complex business processes end to end.</p>
+      </div>
+      <div class="proj-card" data-reveal>
+        <div class="proj-index">04</div>
+        <div class="proj-title">Resolution Evolution</div>
+        <div class="proj-tags"><span>PYTHON</span><span>TENSORFLOW</span><span>DEEP LEARNING</span></div>
+        <p class="proj-desc">AI image super-resolution tool built with Python and TensorFlow — deep-learning model training, evaluation pipelines, and quality benchmarking.</p>
+      </div>
+    </div>
+
+    <div class="also-built" data-reveal>
+      <h4>Also built</h4>
+      <div class="also-grid">
+        <span>Multimodal Document Intelligence Platform</span>
+        <span>LogoAnimate Pro — AI logo animation</span>
+        <span>n8n workflow automation</span>
+        <span>YouTube Downloader</span>
+        <span>Python web scraper</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="stack">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="section-head num">04 / Stack</span>
+      <h2>Tools of the trade</h2>
+    </div>
+    <div class="stack-grid">
+      <div class="stack-card" data-reveal>
+        <h3>AI &amp; Machine Learning</h3>
+        <div class="stack-chips"><span>LLMs</span><span>Generative AI</span><span>Agentic AI</span><span>RAG</span><span>Graph RAG</span><span>NLP</span><span>TensorFlow</span><span>Multimodal AI</span><span>Multi-Agent Systems</span></div>
+      </div>
+      <div class="stack-card" data-reveal>
+        <h3>Agentic AI &amp; Automation</h3>
+        <div class="stack-chips"><span>Autonomous Agents</span><span>Multi-Agent Orchestration</span><span>Agent Memory &amp; Tooling</span><span>LangChain</span><span>LangGraph</span><span>Semantic Search</span><span>n8n</span></div>
+      </div>
+      <div class="stack-card" data-reveal>
+        <h3>Full-Stack</h3>
+        <div class="stack-chips"><span>Python</span><span>Java</span><span>Spring Boot</span><span>Microservices</span><span>REST APIs</span><span>React</span><span>JavaScript</span><span>Next.js</span></div>
+      </div>
+      <div class="stack-card" data-reveal>
+        <h3>Databases</h3>
+        <div class="stack-chips"><span>Oracle</span><span>PostgreSQL</span><span>MySQL</span><span>Supabase</span></div>
+      </div>
+      <div class="stack-card" data-reveal>
+        <h3>DevOps &amp; Cloud</h3>
+        <div class="stack-chips"><span>Docker</span><span>CI/CD</span><span>Linux</span><span>Shell Scripting</span><span>Google Cloud</span></div>
+      </div>
+      <div class="stack-card" data-reveal>
+        <h3>Languages</h3>
+        <div class="stack-chips"><span>Arabic — Native</span><span>English — B2 Professional</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="credentials">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <span class="section-head num">05 / Credentials</span>
+      <h2>Education &amp; certifications</h2>
+    </div>
+    <div class="cred-grid">
+      <div class="edu-card" data-reveal>
+        <div class="deg">BSc, Artificial Intelligence &amp; Computer Science</div>
+        <div class="school">Tafila Technical University</div>
+        <div class="meta">Tafila, Jordan · Graduated Jul 2024 · GPA 3.12</div>
+        <p>Focus on AI, full-stack systems, and source-code security research.</p>
+      </div>
+      <div class="cert-grid" data-reveal>
+        <div class="cert-badge"><span class="mark">◆</span><div class="body"><b>Data Science Professional</b><span>OCI 2025 · Oracle</span></div></div>
+        <div class="cert-badge"><span class="mark">◆</span><div class="body"><b>Generative AI Professional</b><span>OCI 2025 · Oracle</span></div></div>
+        <div class="cert-badge"><span class="mark">◆</span><div class="body"><b>Multi-Agent Systems</b><span>Coursera</span></div></div>
+        <div class="cert-badge"><span class="mark">◆</span><div class="body"><b>Retrieval-Augmented Generation</b><span>RAG · Coursera</span></div></div>
+        <div class="cert-badge"><span class="mark">◆</span><div class="body"><b>Generative AI &amp; LLMs</b><span>Coursera</span></div></div>
+        <div class="cert-badge"><span class="mark">◆</span><div class="body"><b>Spring Boot · React · Microservices · Docker</b><span>Udemy</span></div></div>
+        <div class="cert-badge"><span class="mark">◆</span><div class="body"><b>Full-Stack Development Program</b><span></span></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <span class="eyebrow" style="justify-content:center;">06 / Contact</span>
+    <h2 data-reveal>Let's build something that thinks.</h2>
+    <p class="hint">Open to conversations about agentic AI, generative AI, and full-stack builds.</p>
+    <div class="contact-links" data-reveal>
+      <a class="btn btn-primary" href="mailto:hishamsunjeq123@gmail.com">hishamsunjeq123@gmail.com</a>
+      <a class="btn btn-ghost" href="https://linkedin.com/in/hisham-sanjag" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>© 2026 Hisham Sanjag — Al Zarqa, Jordan</span>
+    <a href="#hero">Back to top ↑</a>
+  </div>
+</footer>
+
+<script>
+  // ---------- mobile nav ----------
+  const menuBtn = document.getElementById('menuBtn');
+  const navLinks = document.getElementById('navLinks');
+  menuBtn.addEventListener('click', () => navLinks.classList.toggle('open'));
+  navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+  // ---------- header scroll state ----------
+  const headerEl = document.querySelector('header');
+  const onScroll = () => headerEl.classList.toggle('scrolled', window.scrollY > 30);
+  window.addEventListener('scroll', onScroll);
+  onScroll();
+
+  // ---------- live Jordan clock ----------
+  const clockEl = document.getElementById('navClock');
+  function updateClock() {
+    const t = new Date().toLocaleTimeString('en-GB', {
+      timeZone: 'Asia/Amman', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+    });
+    clockEl.textContent = t + ' JO';
+  }
+  updateClock();
+  setInterval(updateClock, 1000);
+
+  // ---------- scroll reveal ----------
+  const revealEls = document.querySelectorAll('[data-reveal]');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('in-view'), i * 60);
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => io.observe(el));
+
+  // ---------- terminal typewriter ----------
+  const lines = [
+    '$ initiating session --agent=hisham',
+    '> loading profile.json ......... done',
+    '> mounting knowledge_graph :: RAG + GraphRAG ... connected',
+    '> spawning agents :: planner, retriever, executor ... online',
+    '> orchestration layer :: LangGraph ... ready',
+    '> status: production-stable'
+  ];
+  const termEl = document.getElementById('terminalBody');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function typeLines(lines, el, speed = 18) {
+    let out = '';
+    let li = 0, ci = 0;
+    function step() {
+      if (li >= lines.length) {
+        el.innerHTML = out + '<span class="cursor"></span>';
+        return;
+      }
+      const line = lines[li];
+      if (ci <= line.length) {
+        out = lines.slice(0, li).join('\n') + (li > 0 ? '\n' : '') + line.slice(0, ci);
+        el.textContent = out;
+        ci++;
+        setTimeout(step, speed + Math.random() * 22);
+      } else {
+        li++; ci = 0;
+        setTimeout(step, 160);
+      }
+    }
+    step();
+  }
+
+  if (reduceMotion) {
+    termEl.textContent = lines.join('\n');
+  } else {
+    typeLines(lines, termEl);
+  }
+
+  // ---------- network canvas ----------
+  const canvas = document.getElementById('network-canvas');
+  const ctx = canvas.getContext('2d');
+  const hero = document.getElementById('hero');
+  let W, H, nodes = [], pulses = [];
+  const ACCENT = '69,224,196';
+  const AMBER = '255,171,74';
+
+  function resize() {
+    W = canvas.width = hero.offsetWidth;
+    H = canvas.height = hero.offsetHeight;
+    const count = W < 700 ? 32 : 70;
+    nodes = Array.from({ length: count }, () => ({
+      x: Math.random() * W,
+      y: Math.random() * H,
+      vx: (Math.random() - 0.5) * 0.25,
+      vy: (Math.random() - 0.5) * 0.25,
+      r: Math.random() * 1.6 + 1
+    }));
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  const LINK_DIST = 150;
+
+  function maybeSpawnPulse() {
+    if (Math.random() < 0.02 && nodes.length > 1) {
+      const a = nodes[Math.floor(Math.random() * nodes.length)];
+      let b = nodes[Math.floor(Math.random() * nodes.length)];
+      let tries = 0;
+      while (b === a && tries < 5) { b = nodes[Math.floor(Math.random() * nodes.length)]; tries++; }
+      const d = Math.hypot(a.x - b.x, a.y - b.y);
+      if (d < LINK_DIST * 1.4 && d > 10) {
+        pulses.push({ a, b, t: 0 });
+      }
+    }
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    for (let n of nodes) {
+      n.x += n.vx; n.y += n.vy;
+      if (n.x < 0 || n.x > W) n.vx *= -1;
+      if (n.y < 0 || n.y > H) n.vy *= -1;
+    }
+
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        const a = nodes[i], b = nodes[j];
+        const d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < LINK_DIST) {
+          const alpha = (1 - d / LINK_DIST) * 0.35;
+          ctx.strokeStyle = `rgba(${ACCENT},${alpha})`;
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+        }
+      }
+    }
+
+    for (let n of nodes) {
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${ACCENT},0.7)`;
+      ctx.fill();
+    }
+
+    maybeSpawnPulse();
+    pulses = pulses.filter(p => p.t <= 1);
+    for (let p of pulses) {
+      p.t += 0.012;
+      const x = p.a.x + (p.b.x - p.a.x) * p.t;
+      const y = p.a.y + (p.b.y - p.a.y) * p.t;
+      ctx.beginPath();
+      ctx.arc(x, y, 2.4, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(${AMBER},0.9)`;
+      ctx.shadowColor = `rgba(${AMBER},0.8)`;
+      ctx.shadowBlur = 8;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+
+    if (!reduceMotion) requestAnimationFrame(draw);
+  }
+  draw();
+</script>
+</body>
+</html>
